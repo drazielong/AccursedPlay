@@ -5,56 +5,86 @@ class theaterStart extends Phaser.Scene {
 
     preload(){
         // load assets
-        this.load.image('test', './assets/testHotbar.png');
+        this.load.image('start', './assets/testBG.png')
     }
 
     create() {
         // title
-        this.title = this.add.tileSprite(0, 10, 1280, 720, 'start').setOrigin(0, 0);
-
-        //this.input.setDefaultCursor(handPointer);
-
-        //images added higher on the list will be covered by items added later (layering)
-
-        // borders 
-        //(x, y, height, width, fillcolor, alpha)
+        this.title = this.add.tileSprite(10, 10, 1260, 600, 'start').setOrigin(0, 0);
+        
         this.add.rectangle(0, 0, 10, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - 100, game.config.width, 100, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, 0, game.config.width, 10, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(game.config.width - 10, 0, 10, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(game.config.width - 10, 0, 10, game.config.height, 0xFFFFFF).setOrigin(0, 0);    
 
-        //spell hand?
-        
         //hotbar test
         this.test = this.add.tileSprite(0, 0, 1280, 720, 'test').setOrigin(0, 0);
 
-        //text box (inner monologue or observations... will dialogue appear differently? maybe not)
-        //alternatively, create art for the box within the original boundaries
-        this.add.rectangle(10, game.config.height - 150, game.config.width - 20, 50, 0xFF0000).setOrigin(0, 0);
+        //text box, did not change origin so it stays in the middle
+        this.textBox = this.add.rectangle(640, game.config.height - 120, game.config.width - 20, 50, 0xFF0000)
 
-        // music
-        //this.menuBGM = this.sound.add('menu_music', {volume: 0.2, loop: true});
-        //this.menuBGM.play();
+        //text
+        this.interText = this.add.text(this.textBox.x, this.textBox.y, '', {fontFamily: 'Georgia, serif'});
+        this.interText.setFontSize(24);
+        this.interText.setOrigin(0.5,0.5);
 
-        // define key and var
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.textTimer = 0;
+        //hotbar hitboxes
+        this.backpack = this.add.sprite(100, 680, 'hitbox');
+        this.backpack.setDisplaySize(100, 100);
+        this.backpack.setInteractive({
+           cursor: handPointer
+        });
+
+        this.deck = this.add.sprite(300, 680, 'hitbox');
+        this.deck.setDisplaySize(100, 100);
+        this.deck.setInteractive({
+           cursor: handPointer
+        });
+
+        this.card = this.add.sprite(640, 680, 'hitbox');
+        this.card.setDisplaySize(100, 100);
+        this.card.setInteractive({
+           cursor: handPointer
+        });
+
+        this.menu = this.add.sprite(1150, 680, 'hitbox');
+        this.menu.setDisplaySize(100, 100);
+        this.menu.setInteractive({
+           cursor: handPointer
+        });
     }
-    /*
-    //this is specifically for the start menu!!!!!
-    update (){
-        if(this.textTimer == 0){
-            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                this.textTimer += 1;
-                this.sound.play("CrashingWaves");
-                this.cameras.main.fadeOut(1000, 0, 0, 0)
-                this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-                    this.time.delayedCall(500, () => {
-                        this.scene.start('Intro');
-                    });
-                });
-            }
+
+    update() {
+        //when clicking the hitboxes, display new text
+        this.backpack.on('pointerdown', (pointer) => {
+            this.interText.text = 'My backpack. It will contain useful info and key items.';
+            this.textTimer = 1;
+        });
+
+        this.card.on('pointerdown', (pointer) => {
+            this.interText.text = "The hotbar will go here for consumable items.";
+            this.textTimer = 1;
+        });
+
+        this.menu.on('pointerdown', (pointer) => {
+            this.interText.text = "The settings menu. In theory.";
+            this.textTimer = 1;
+        });
+
+        this.deck.on('pointerdown', (pointer) => {
+            this.interText.text = "My spell deck. As stretch I could animate them lol.";
+            this.textTimer = 1;
+        });
+
+        //text timer (maybe change time depending on length of string)
+        //or add an arrow for continuing text along
+        if(this.textTimer > 0 && this.textTimer < 200) {
+            this.textTimer += 1;
+        } 
+        else if(this.textTimer >= 200){
+            // hide text
+            this.interText.text = '';
+            this.textTimer = 0;
         }
     }
-    */
 }

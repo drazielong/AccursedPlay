@@ -5,11 +5,19 @@ class startMenu extends Phaser.Scene {
 
     preload(){
         // load assets
+        this.load.image('test', './assets/testHotbar.png');
+        this.load.image('hitbox', './assets/Hitbox1.png');
     }
 
     create() {
-        // title
+        // title screen
         //this.title = this.add.tileSprite(0, 10, 1280, 720, 'start').setOrigin(0, 0);
+
+        this.input.setDefaultCursor(handDefault);
+
+        this.interText = this.add.text(640, 360, "Press start to skip this screen. It'll be the main menu.", {fontFamily: 'Georgia, serif'});
+        this.interText.setFontSize(24);
+        this.interText.setOrigin(0.5,0.5);
 
         // define key and var
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
