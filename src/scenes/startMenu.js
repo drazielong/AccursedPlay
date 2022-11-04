@@ -15,7 +15,7 @@ class startMenu extends Phaser.Scene {
 
         this.input.setDefaultCursor(handDefault);
 
-        this.interText = this.add.text(640, 360, "Press start to skip this screen. It'll be the main menu.", {fontFamily: 'Georgia, serif'});
+        this.interText = this.add.text(640, 360, "Press space to skip this screen. It'll be the main menu.", {fontFamily: 'Georgia, serif'});
         this.interText.setFontSize(24);
         this.interText.setOrigin(0.5,0.5);
 
@@ -27,7 +27,6 @@ class startMenu extends Phaser.Scene {
         if(this.textTimer == 0){
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                 this.textTimer += 1;
-                //this.sound.play("CrashingWaves");
                 this.cameras.main.fadeOut(1000, 0, 0, 0)
                 this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
                     this.time.delayedCall(500, () => {

@@ -6,7 +6,7 @@ let config = {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },  
-    scene: [ startMenu, theaterStart ],
+    scene: [ startMenu, theaterStart, Inventory ],
   }
 
 let game = new Phaser.Game(config);
