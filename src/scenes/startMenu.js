@@ -5,7 +5,7 @@ class startMenu extends Phaser.Scene {
 
     preload(){
         // load assets
-        this.load.image('hitbox', './assets/Hitbox1.png');
+        this.load.image('hitbox', './assets/hitbox1.png');
         this.load.plugin('rexclickoutsideplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexclickoutsideplugin.min.js', true);
     }
 
