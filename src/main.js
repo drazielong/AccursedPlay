@@ -6,7 +6,7 @@ let config = {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },  
-    scene: [ startMenu, theaterStart, Inventory ],
+    scene: [ startMenu, Borders, theaterStart, Inventory ],
   }
 
 let game = new Phaser.Game(config);
@@ -29,5 +29,9 @@ let prevScene = '';
 let prevText;
 let nextText;
 
-// puzzle 1
-let level = 0;
+//text
+let interText;
+let textTimer = 0;
+
+//click detection
+let clickedOut = false;

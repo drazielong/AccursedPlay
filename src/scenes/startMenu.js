@@ -5,8 +5,8 @@ class startMenu extends Phaser.Scene {
 
     preload(){
         // load assets
-        this.load.image('test', './assets/testHotbar.png');
         this.load.image('hitbox', './assets/Hitbox1.png');
+        this.load.plugin('rexclickoutsideplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexclickoutsideplugin.min.js', true);
     }
 
     create() {
@@ -23,6 +23,7 @@ class startMenu extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.textTimer = 0;
     }
+    
     update (){
         if(this.textTimer == 0){
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {

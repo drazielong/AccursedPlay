@@ -27,9 +27,7 @@ class Inventory extends Phaser.Scene {
         this.closeInven.on('pointerdown', () => {
             this.scene.stop("backpackInv");
             this.scene.wake(prevScene);
+            this.scene.wake('Borders');
         });
-    }
-    
-    update() {
     }
 } 
