@@ -71,7 +71,7 @@ class shockAlock extends Phaser.Scene {
             cursor: handPointer
         });
 
-        this.electrocution = [50, 100, 500]; //this should get exponentially worse, but player only has 500 hp ... make it 1000?
+        this.electrocution = [50, 75, 200]; //this should get exponentially worse, but player only has 500 hp ... make it 1000?
         
         this.int3.on('pointerdown', (pointer) => {
             if ((this.int1Solved == 'true') && (this.int2Solved == 'true')) {
