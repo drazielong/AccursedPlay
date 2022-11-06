@@ -6,7 +6,7 @@ let config = {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },  
-    scene: [ startMenu, Borders, theaterStart, Inventory ],
+    scene: [ startMenu, Borders, theaterStart, Inventory, shockAlock, gameOver ],
   }
 
 let game = new Phaser.Game(config);
@@ -24,6 +24,9 @@ let keySPACE, keyENTER, keyW, keyA, keyS, keyD, keyI, key1, key2, key3, key4, ke
 
 // global variables
 let prevScene = '';
+let HP = 500;
+let prevHP = 500;
+let Mana = 80;
 
 //intro
 let prevText;

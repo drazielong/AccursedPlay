@@ -4,9 +4,12 @@ class Inventory extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('exit', './assets/inventory/x.png');
+        this.load.image('journal', './assets/inventory/journal.png');
     }
     create() {
+        //bg
+        this.bg = this.add.image(10, 10, 'journal').setOrigin(0, 0);
+
         //exit button
         this.closeInven = this.add.image(50, 50, 'exit');
         this.closeInven.setDisplaySize(50, 50);
@@ -15,13 +18,14 @@ class Inventory extends Phaser.Scene {
         });
 
         //info
-        this.interText = this.add.text(640, 360, "This is your backpack.\nIt will contain useful info and key items.\nPress the X in the upper lefthand corner to return.", 
+        /*
+        this.interText = this.add.text(640, 360, "This is your backpack.\nIt will contain useful info and your settings.\nPress the X in the upper lefthand corner to return.", 
         {
             fontFamily: 'Georgia, serif',
             align: 'center',
             fontSize: 24
-        });
-        this.interText.setOrigin(0.5,0.5);
+        }).setOrigin(0.5,0.5);
+        */
 
         // "x" to close inventory
         this.closeInven.on('pointerdown', () => {
