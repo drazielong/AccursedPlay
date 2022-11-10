@@ -6,7 +6,7 @@ let config = {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },  
-    scene: [ startMenu, Borders, theaterStart, Inventory, shockAlock, gameOver ],
+    scene: [ startMenu, Borders, theaterStart, Inventory, shockAlock, macdeath, gameOver ],
   }
 
 let game = new Phaser.Game(config);
@@ -38,3 +38,6 @@ let textTimer = 0;
 
 //click detection
 let clickedOut = false;
+let emptySpace = false;
+let outlineList = [];
+let cardList = [];

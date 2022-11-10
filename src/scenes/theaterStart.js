@@ -22,25 +22,43 @@ class theaterStart extends Phaser.Scene {
 
         //UI
         this.scene.run('Borders');
+        this.borderScene = this.scene.get("Borders");
+
+        //items
+        this.rope = this.add.image(790, 670, 'rope');
+        this.rope.setDisplaySize(70, 70);
+        this.rope.setInteractive({
+           cursor: handPointer
+        });
+
+        this.rope.isCursor = false;
+
+        this.rope.on('pointerup', (pointer) => {
+            interText.text = "A fairly long rope.";
+            this.input.setDefaultCursor('url(./assets/itemCursors/rope.png), pointer');
+            this.rope.isCursor = true;
+            clickedOut = false;
+        }); 
 
         //interactables
-        this.int1 = this.add.image(70, 400, 'hitbox');
+        this.int1 = this.add.image(70, 400, 'hitbox1');
         this.int1.setInteractive({
             cursor: handPointer
          });
 
         //clicking correct object destroys object
         this.int1.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor == 'url(./assets/itemCursors/rope.png), pointer')) {
+            if ((this.rope.isCursor)) {
                 this.input.setDefaultCursor(handDefault);
                 this.rope.destroy();
                 interText.text = "congrats you used the rope correctly yayyyy";
+                this.rope.isCursor = false;
                 clickedOut = false;
             }
             else interText.text = "I need a rope to complete this puzzle.";
         });
 
-        this.int2 = this.add.image(700, 150, 'hitbox');
+        this.int2 = this.add.image(700, 150, 'hitbox1');
         this.int2.setInteractive({
             cursor: handPointer
          });
@@ -53,22 +71,28 @@ class theaterStart extends Phaser.Scene {
             prevScene = 'shockAlock';
         });
 
-        //items
-        //note: i would rather have these be square instead of rectangular for the cursors
-        //note note: if ur able to collect up to 5 objects, in a perfect world they would enter the inv in order
-        //this means i would have some kind of array for each "slot" which are the x and y coordinates and check if an item is there already
-        //if so, move to second slot and so on
-        //for the purposes of this demo I will predetermine item placement like lighthouse
-        this.rope = this.add.image(710, 670, 'rope');
-        this.rope.setDisplaySize(100, 80);
-        this.rope.setInteractive({
-           cursor: handPointer
-        });
+        this.int3 = this.add.image(600, 200, 'hitbox1');
+        this.int3.setInteractive({
+            cursor: handPointer
+         });
 
-        this.rope.on('pointerup', (pointer) => {
-            interText.text = "A fairly long rope.";
-            this.input.setDefaultCursor('url(./assets/itemCursors/rope.png), pointer');
-            clickedOut = false;
-        }); 
+        this.int3.on('pointerdown', (pointer) => {
+            if ((this.input.mouse.manager.defaultCursor != handDefault)) {
+                this.input.setDefaultCursor(handDefault);
+            }
+            this.scene.switch('macdeath');
+            prevScene = 'macdeath';
+        });
+    }
+
+    update() {
+        if (this.rope.isCursor) {
+            this.borderScene.clickedOutCheck(this.rope); 
+            if (clickedOut) {
+                this.input.setDefaultCursor(handDefault);
+                interText.text = "Can't use this here."; 
+                this.rope.isCursor = false;
+            }
+        }
     }
 }

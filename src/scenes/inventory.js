@@ -17,16 +17,6 @@ class Inventory extends Phaser.Scene {
             cursor: handPointer
         });
 
-        //info
-        /*
-        this.interText = this.add.text(640, 360, "This is your backpack.\nIt will contain useful info and your settings.\nPress the X in the upper lefthand corner to return.", 
-        {
-            fontFamily: 'Georgia, serif',
-            align: 'center',
-            fontSize: 24
-        }).setOrigin(0.5,0.5);
-        */
-
         // "x" to close inventory
         this.closeInven.on('pointerdown', () => {
             this.scene.stop("backpackInv");

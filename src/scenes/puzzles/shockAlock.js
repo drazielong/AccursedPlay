@@ -4,8 +4,8 @@ class shockAlock extends Phaser.Scene {
     }
 
     preload () {
-        this.load.image('shockBG', './assets/puzzles/shockAlock-bg.png');
-        this.load.image('shockBG1', './assets/puzzles/shockAlock-unlocked.png');
+        this.load.image('shockBG', './assets/puzzles/shockalock/shockAlock-bg.png');
+        this.load.image('shockBG1', './assets/puzzles/shockalock/shockAlock-unlocked.png');
         this.load.image('shock', './assets/puzzles/shock.png')
     }
 
@@ -65,7 +65,7 @@ class shockAlock extends Phaser.Scene {
         });
 
         //power button
-        this.int3 = this.add.image(1075, 340, 'hitbox');
+        this.int3 = this.add.image(1075, 340, 'hitbox1');
         this.int3.setDisplaySize(100, 100);
         this.int3.setInteractive({
             cursor: handPointer

@@ -4,7 +4,6 @@ class theaterStart extends Phaser.Scene {
     }
 
     preload(){
-        // load assets
         this.load.image('test', './assets/testHotbar.png');
     }
 

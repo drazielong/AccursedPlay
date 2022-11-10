@@ -4,7 +4,8 @@ class startMenu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('hitbox', './assets/hitbox1.png');
+        this.load.image('hitbox', './assets/hitbox.png');
+        this.load.image('hitbox1', './assets/hitbox1.png');
         this.load.image('exit', './assets/inventory/x.png');
         this.load.image('fire', './assets/cards/fire.png');
         this.load.image('ice', './assets/cards/ice.png');

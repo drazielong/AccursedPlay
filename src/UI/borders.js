@@ -47,17 +47,34 @@ class Borders extends Phaser.Scene {
         });
     }
 
+    cursorCheck (item) {
+        if (item.isCursor) {
+            this.clickedOutCheck(item); 
+        }
+    }
+
+    outlineReset (item, outline) {
+        if ((item.isCursor) && (clickedOut)) {
+            outline.setStrokeStyle(5,0x000000);
+        }
+    }
+
     create () {
         this.cameras.main.fadeIn(1000, 0, 0, 0)
         //borders
         //(x, y, height, width, fillcolor, alpha)
-        this.add.rectangle(0, 0, 10, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, game.config.height - 100, game.config.width, 100, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, 0, game.config.width, 10, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(game.config.width - 10, 0, 10, game.config.height, 0xFFFFFF).setOrigin(0, 0);    
+        this.add.rectangle(0, 0, 10, game.config.height, 0xc5c5c5).setOrigin(0, 0);
+        this.add.rectangle(0, game.config.height - 100, game.config.width, 100, 0xc5c5c5).setOrigin(0, 0);
+        this.add.rectangle(0, 0, game.config.width, 10, 0xc5c5c5).setOrigin(0, 0);
+        this.add.rectangle(game.config.width - 10, 0, 10, game.config.height, 0xc5c5c5).setOrigin(0, 0);    
      
         //hotbar test
         this.test = this.add.image(0, 0, 'test').setOrigin(0, 0);
+        this.add.rectangle(790, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.add.rectangle(870, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.add.rectangle(950, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.add.rectangle(1030, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.add.rectangle(1110, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
 
         //text box
         this.textBox = this.add.rectangle(640, game.config.height - 120, game.config.width - 20, 50, 0xFF0000);
@@ -79,6 +96,17 @@ class Borders extends Phaser.Scene {
             fontSize: 16,
             align: 'center'
         }).setOrigin(0.5,0.5);
+
+        //card outlines
+        this.fireOutline = this.add.rectangle(200, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.stormOutline = this.add.rectangle(270, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.iceOutline = this.add.rectangle(340, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.balanceOutline = this.add.rectangle(410, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.mythOutline = this.add.rectangle(480, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.lifeOutline = this.add.rectangle(550, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        this.deathOutline = this.add.rectangle(620, 670, 50, 78).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+
+        outlineList = [this.fireOutline, this.stormOutline, this.iceOutline, this.balanceOutline, this.mythOutline, this.lifeOutline, this.deathOutline];
 
         //add cards
         this.fire = this.add.image(200, 670, 'fire').setOrigin(0.5, 0.5).setDisplaySize(50, 78);
@@ -116,115 +144,62 @@ class Borders extends Phaser.Scene {
             cursor: handPointer
         });
 
+        cardList = [this.fire, this.storm, this.ice, this.balance, this.myth, this.life, this.death];
+
         //card animations
-        this.animCreate(this.fire);
-        this.animCreate(this.storm);
-        this.animCreate(this.ice);
-        this.animCreate(this.balance);
-        this.animCreate(this.myth);
-        this.animCreate(this.life);
-        this.animCreate(this.death);
+        cardList.forEach(element => {
+            this.animCreate(element);
+        });
 
         //card click check
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.fire);
-
         this.fire.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/fire.png), pointer');
+            this.fireOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.fire.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.storm);
 
         this.storm.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/storm.png), pointer');
+            this.stormOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.storm.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.ice);
 
         this.ice.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/ice.png), pointer');
+            this.iceOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.ice.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.balance);
 
         this.balance.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/balance.png), pointer');
+            this.balanceOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.balance.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.myth);
 
         this.myth.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/myth.png), pointer');
+            this.mythOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.myth.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.life);
 
         this.life.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/life.png), pointer');
+            this.lifeOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.life.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.clickedOutCheck(this.death);
 
         this.death.on('pointerup', (pointer) => {
             this.input.setDefaultCursor('url(./assets/itemCursors/death.png), pointer');
+            this.deathOutline.setStrokeStyle(5, 0x16c461);
             clickedOut = false;
+            this.death.isCursor = true;
         }); 
-
-        this.input.on('pointerdown', (pointer) => {
-            if ((this.input.mouse.manager.defaultCursor != handDefault) && (clickedOut = true)) {
-                this.input.setDefaultCursor(handDefault);
-                interText.text = "Can't use this here."; 
-            }
-        });
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //inventory button
         this.menu = this.add.image(1220, 670, 'hitbox');
@@ -239,13 +214,40 @@ class Borders extends Phaser.Scene {
             this.scene.sleep(prevScene);
         });
 
+        //position of mouseclick for placing hitboxes
         this.input.on('pointerdown', (pointer) => {
             console.log('X:' + Math.floor(this.input.activePointer.x));
             console.log('Y:' + Math.floor(this.input.activePointer.y));
         });
+
+        console.log()
     }
 
     update () {
+         //Outline reset: hope this doesnt crash my game lmfao
+         outlineList.forEach(element => {
+            if (clickedOut) {
+                element.setStrokeStyle(5,0x000000);
+            }
+        });
+
+        //if pointer is over a hitbox, emptySpace = false, else true
+
+        //if cursor is this item, run clickedout check on it
+        if (this.input.mouse.manager.defaultCursor != handDefault) {
+            cardList.forEach(element => {
+                if (element.isCursor) {
+                    this.cursorCheck(element); //clickedout (of this.fire?) = true or false
+                    if (clickedOut) { //add && emptySpace to make sure u aren't clicking an interactable?
+                        this.input.setDefaultCursor(handDefault);
+                        interText.text = "Can't use this here.";
+                        clickedOut = false; 
+                        emptySpace = false;
+                    }
+                }
+            });
+        }
+
         //text timer
         //the only problem w this method is that if u keep clicking the timer will be extended for a long time
         //not the biggest deal tbh its just kind of annoying when switching scenes
@@ -253,7 +255,7 @@ class Borders extends Phaser.Scene {
             textTimer = 1;
         }
 
-        //text timer (maybe change time depending on length of string)
+        //text timer 
         if(textTimer > 0 && textTimer < 150) {
             textTimer += 1;
         } 
