@@ -190,10 +190,10 @@ class macdeath extends Phaser.Scene {
                     this.bg2.destroy();
                     this.int5.destroy();
                 }
-                else if ((this.input.mouse.manager.defaultCursor == 'url(./assets/itemCursors/fire.png), pointer') || (this.input.mouse.manager.defaultCursor == 'url(./assets/itemCursors/life.png), pointer')) {
+                else if ((this.input.mouse.manager.defaultCursor == 'url(./assets/itemCursors/fire.png), pointer') || (this.input.mouse.manager.defaultCursor == 'url(./assets/itemCursors/life.png), pointer') && !this.int5Solved) {
                     this.macdeathReset();
                 }
-                else if ((this.input.mouse.manager.defaultCursor != handDefault)) {
+                else if ((this.input.mouse.manager.defaultCursor != handDefault) && !this.int5Solved) {
                     this.input.setDefaultCursor(handDefault);
                     interText.text = "How can I heal him with my own energy?";
                 }
