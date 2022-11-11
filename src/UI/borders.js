@@ -53,10 +53,23 @@ class Borders extends Phaser.Scene {
         }
     }
 
-    outlineReset (item, outline) {
-        if ((item.isCursor) && (clickedOut)) {
-            outline.setStrokeStyle(5,0x000000);
-        }
+    mouseReset () {
+        cardList.forEach(element => {
+            if (element.isCursor) {
+                this.cursorCheck(element); //clickedout (of this.fire?) = true or false
+                if (clickedOut) { //add && emptySpace to make sure u aren't clicking an interactable?
+                    this.input.setDefaultCursor(handDefault);
+                    interText.text = "Can't use this here.";
+                    clickedOut = false; 
+                }
+            }
+        });
+    }
+
+    outlineReset () {
+        outlineList.forEach(element => {
+            element.setStrokeStyle(5,0x000000);
+        });
     }
 
     create () {
@@ -70,14 +83,14 @@ class Borders extends Phaser.Scene {
      
         //hotbar test
         this.test = this.add.image(0, 0, 'test').setOrigin(0, 0);
-        this.add.rectangle(790, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
-        this.add.rectangle(870, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
-        this.add.rectangle(950, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
-        this.add.rectangle(1030, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
-        this.add.rectangle(1110, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        hotbar = this.add.rectangle(750, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        hotbar1 = this.add.rectangle(840, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        hotbar2 = this.add.rectangle(930, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        hotbar3 = this.add.rectangle(1020, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
+        hotbar4 = this.add.rectangle(1110, 670, 80, 80).setStrokeStyle(5, 0x000000).setOrigin(0.5, 0.5);
 
         //text box
-        this.textBox = this.add.rectangle(640, game.config.height - 120, game.config.width - 20, 50, 0xFF0000);
+        this.textBox = this.add.rectangle(640, game.config.height - 120, game.config.width - 20, 50, 0x151515);
         
         //text
         interText = this.add.text(640, 600, '', {
@@ -220,34 +233,19 @@ class Borders extends Phaser.Scene {
             console.log('Y:' + Math.floor(this.input.activePointer.y));
         });
 
-        console.log()
+        //Outline + cursor reset
+        this.input.on('pointerup', (pointer) => {
+            if (this.input.mouse.manager.defaultCursor != handDefault) {
+                this.mouseReset();
+            }
+            //this doesn't work when clicking on interactables, but it does work if called within the scene the interactables are in?
+            if (this.input.mouse.manager.defaultCursor == handDefault) {
+                this.outlineReset();
+            }
+        });
     }
 
     update () {
-         //Outline reset: hope this doesnt crash my game lmfao
-         outlineList.forEach(element => {
-            if (clickedOut) {
-                element.setStrokeStyle(5,0x000000);
-            }
-        });
-
-        //if pointer is over a hitbox, emptySpace = false, else true
-
-        //if cursor is this item, run clickedout check on it
-        if (this.input.mouse.manager.defaultCursor != handDefault) {
-            cardList.forEach(element => {
-                if (element.isCursor) {
-                    this.cursorCheck(element); //clickedout (of this.fire?) = true or false
-                    if (clickedOut) { //add && emptySpace to make sure u aren't clicking an interactable?
-                        this.input.setDefaultCursor(handDefault);
-                        interText.text = "Can't use this here.";
-                        clickedOut = false; 
-                        emptySpace = false;
-                    }
-                }
-            });
-        }
-
         //text timer
         //the only problem w this method is that if u keep clicking the timer will be extended for a long time
         //not the biggest deal tbh its just kind of annoying when switching scenes

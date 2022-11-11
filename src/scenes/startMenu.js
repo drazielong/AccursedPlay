@@ -18,16 +18,13 @@ class startMenu extends Phaser.Scene {
     }
 
     create() {
-        // title screen
-        //this.title = this.add.tileSprite(0, 10, 1280, 720, 'start').setOrigin(0, 0);
-
         this.input.setDefaultCursor(handDefault);
 
         this.interText = this.add.text(640, 360, "This is gonna be a showcase of mechanics, not a full game.\n\nClick to skip this screen.", {fontFamily: 'Georgia, serif', align: 'center'});
         this.interText.setFontSize(24);
         this.interText.setOrigin(0.5,0.5);
 
-        this.clicked = false; //this is so it'll only chance scenes once instead of spam clicking
+        this.clicked = false; //this is so it'll only change scenes once instead of spam clicking
 
         this.input.on('pointerdown', (pointer) => {
             if(!this.clicked) {

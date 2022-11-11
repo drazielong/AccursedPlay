@@ -25,7 +25,7 @@ class theaterStart extends Phaser.Scene {
         this.borderScene = this.scene.get("Borders");
 
         //items
-        this.rope = this.add.image(790, 670, 'rope');
+        this.rope = this.add.image(750, 670, 'rope');
         this.rope.setDisplaySize(70, 70);
         this.rope.setInteractive({
            cursor: handPointer
@@ -38,6 +38,7 @@ class theaterStart extends Phaser.Scene {
             this.input.setDefaultCursor('url(./assets/itemCursors/rope.png), pointer');
             this.rope.isCursor = true;
             clickedOut = false;
+            hotbar.setStrokeStyle(5, 0x16c461);
         }); 
 
         //interactables
@@ -54,8 +55,13 @@ class theaterStart extends Phaser.Scene {
                 interText.text = "congrats you used the rope correctly yayyyy";
                 this.rope.isCursor = false;
                 clickedOut = false;
+                hotbar.setStrokeStyle(5, 0x000000);
             }
-            else interText.text = "I need a rope to complete this puzzle.";
+            else {
+                this.input.setDefaultCursor(handDefault);
+                this.borderScene.outlineReset();
+                interText.text = "I need a rope to complete this puzzle.";
+            }
         });
 
         this.int2 = this.add.image(700, 150, 'hitbox1');
@@ -66,6 +72,7 @@ class theaterStart extends Phaser.Scene {
         this.int2.on('pointerdown', (pointer) => {
             if ((this.input.mouse.manager.defaultCursor != handDefault)) {
                 this.input.setDefaultCursor(handDefault);
+                this.borderScene.outlineReset();
             }
             this.scene.switch('shockAlock');
             prevScene = 'shockAlock';
@@ -79,6 +86,7 @@ class theaterStart extends Phaser.Scene {
         this.int3.on('pointerdown', (pointer) => {
             if ((this.input.mouse.manager.defaultCursor != handDefault)) {
                 this.input.setDefaultCursor(handDefault);
+                this.borderScene.outlineReset();
             }
             this.scene.switch('macdeath');
             prevScene = 'macdeath';
@@ -92,7 +100,12 @@ class theaterStart extends Phaser.Scene {
                 this.input.setDefaultCursor(handDefault);
                 interText.text = "Can't use this here."; 
                 this.rope.isCursor = false;
+                hotbar.setStrokeStyle(5, 0x000000);
             }
+        }
+
+        if (HP != 500) {
+            HP = 500;
         }
     }
 }

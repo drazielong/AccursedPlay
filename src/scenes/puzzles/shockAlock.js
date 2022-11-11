@@ -14,6 +14,8 @@ class shockAlock extends Phaser.Scene {
 
         let shock = this.add.image(0, 0, 'shock').setOrigin(0, 0).setVisible(false);
 
+        this.borderScene = this.scene.get("Borders");
+
         //balance square
         this.int1 = this.add.image(170, 310, 'hitbox');
         this.int1.setDisplaySize(100, 100);
@@ -30,13 +32,16 @@ class shockAlock extends Phaser.Scene {
             }
             if ((this.input.mouse.manager.defaultCursor != handDefault)) {
                 this.input.setDefaultCursor(handDefault);
+                this.borderScene.outlineReset(); 
                 interText.text = "Maybe this one?";
                 clickedOut = 'false';
                 if (this.int1Solved != 'true'){
                     this.int1Solved = 'wrong';
                 }
             }
-            else interText.text = "Something that doesn't have a pair?";
+            else {
+                interText.text = "Something that doesn't have a pair?";
+            }
         });
 
         //myth square
@@ -55,6 +60,7 @@ class shockAlock extends Phaser.Scene {
             }
             if ((this.input.mouse.manager.defaultCursor != handDefault)) {
                 this.input.setDefaultCursor(handDefault);
+                this.borderScene.outlineReset(); 
                 interText.text = "Maybe this one?";
                 clickedOut = false;
                 if (this.int2Solved != 'true'){
@@ -71,7 +77,7 @@ class shockAlock extends Phaser.Scene {
             cursor: handPointer
         });
 
-        this.electrocution = [50, 75, 200]; //this should get exponentially worse, but player only has 500 hp ... make it 1000?
+        this.electrocution = [50, 75, 200]; 
         
         this.int3.on('pointerdown', (pointer) => {
             if ((this.int1Solved == 'true') && (this.int2Solved == 'true')) {
